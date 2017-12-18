@@ -25,6 +25,28 @@ Wavey is a social network built on the Ethereum blockchain that provides self-so
 The wavey system in composed a Etheruem smart contracts, a web client, and libraries for developers to integrate connectivity into their apps.
 
 ### Use Cases
-Decentralized app, or Dapps, have a sizable barrier to entry.  A developer must first download an Ethereum light clien, or a chrome extension like [Metamask]().  In order to interact with Dapps that they write as well as Dapps that already exist, they will want to understand how gas and fees work.  For a new user, there is a steep learning curve.
+Decentralized app, or Dapps, have a sizable barrier to entry.  A developer must first download an Ethereum light clien, or a chrome extension like [Metamask](https://metamask.io/).  In order to interact with Dapps that they write as well as Dapps that already exist, they will want to understand how gas and fees work.  For a new user, there is a steep learning curve.
 
-Our vision is for Wavey is . . .  
+Our goal with this project is to provide a means of abstraction for Dapp developers.  By leveraging the social network that Wavey provides, apps could provide interfaces through which regular users could interact with Dapps without having to overcome the hurdles that come with working with Ethereum.
+
+## The Code
+#### [Owned](https://github.com/DaleMittleman/Wavey/blob/master/contracts/Owned.sol)
+We needed an interface that mimicked the Proxy contracts that exists within the Uport project.  Handles ownership of Users and Services.
+
+#### [User](https://github.com/DaleMittleman/Wavey/blob/master/contracts/User.sol)
+The User contract is the heart of the Wavey architecture.  
+
+The contract handles all interacts between Users that exist within standard social networks.  A User can follow friends, accept followings from other Users, and add permissioned users to the account.
+
+Account interactions are handled through logs as opposed state variables in an effort to keep gas costs low.
+
+#### [WNS](https://github.com/DaleMittleman/Wavey/blob/master/contracts/WNS.sol)
+The WNS, or 'Wavey Name Service', handles the tracking of relations between user handles and user addresses.  It provides infrastructure for CRUD operations on the set of network users.
+
+#### [Service](https://github.com/DaleMittleman/Wavey/blob/master/contracts/Service.sol)
+Services can be added to the network that leverage the user network that Wavey provides.  Services can only add users to the network if they are the gateway through which a user registers with Wavey.
+
+Services are incentivized to add users to Wavey through the existence of a reputation statistic.
+
+#### [ServiceManager](https://github.com/DaleMittleman/Wavey/blob/master/contracts/ServiceManager.sol)
+The service manager is for Services what the WNS is for Users.  The contract keeps track of service names and their corresponding addresses.
